@@ -55,3 +55,11 @@ button {
     border: 1px solid transparent;
     cursor: pointer;
 }
+
+span.error {
+    display: inline-block;
+    margin-top: 2px;
+    display: none;
+    line-height: 1;
+    color: #b8230b;
+}
