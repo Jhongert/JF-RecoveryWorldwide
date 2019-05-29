@@ -8,48 +8,12 @@
 // Get the from element
 const form = document.forms[0];
 
+
 // Avoid revalidate the field when pressing one of the following keys (tab, Shift, Ctrl...)
 const excludedKeys = [
     9, 16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144, 225
 ];
 
-/** 
- * Form submit handler
- *  Validate all inputs when the form is submitted
- * 
- */
-form.onsubmit = function(e){
-
-    e.preventDefault(); //Cancel form submition
-    var valid = true;
-
-    // Get all inputs elemets
-    var elements = document.querySelectorAll('input');
-
-    // Validate each input element 
-    elements.forEach(element => {
-        if(!validate(element)) {
-            valid = false;
-        }
-    });
-
-    //If all elements are valid
-    if(valid){
-        Alert('form submitted successfully')
-    }
-}
-
-/** 
- * Form keyup handler
- *  Validate an input when a key is pressed 
- * 
- */
-form.onkeyup =  function(e){
-    if(excludedKeys.indexOf(event.keyCode) === -1){
-        //Call validate function with the current target element
-        validate(e.target)
-    }
-}
 
 /**
  * Validate an input element.
@@ -59,7 +23,7 @@ form.onkeyup =  function(e){
  */
 
 function validate(element){
-    var valid = true;
+    let valid = true;
     //Validate a required input
     if(element.hasAttribute('required')){
         if(element.value.trim() === ""){
@@ -113,4 +77,55 @@ function hideError(element){
 
     spanErr.style.display = 'none'
     spanErr.innerHTML = ''
+}
+
+
+/** 
+ * Form submit handler
+ *  Validate all inputs when the form is submitted
+ * 
+ */
+form.onsubmit = function(e){
+
+    e.preventDefault(); //Cancel form submition
+    var valid = true;
+
+    // Get all inputs elemets
+    var elements = document.querySelectorAll('input');
+
+    // Validate each input element 
+    elements.forEach(element => {
+        if(!validate(element)) {
+            valid = false;
+        }
+    });
+
+    //If all elements are valid. Show message and clear the form
+    if(valid){
+        alert('form submitted successfully');
+        //Form submition code gos here
+        form.reset();
+    }
+}
+
+/** 
+ * Form keyup handler
+ *  Validate an input when a key is pressed 
+ * 
+ */
+form.onkeyup =  function(e){
+    if(excludedKeys.indexOf(event.keyCode) === -1){
+        //Call validate function with the current target element
+        validate(e.target)
+    }
+}
+
+// Set the body height to 524px when the height of the screen is smaller than the #container
+// and set it to 100% when is greater, to center the container vertically
+window.onresize = function(){
+    if(window.innerHeight < 524){
+        document.body.style.height = 524 + 'px'
+    } else {
+        document.body.style.height = 100 + '%'
+    }
 }
